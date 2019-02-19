@@ -1,0 +1,66 @@
+#+DATE: 2019/02/19 12:29:08
+
+* A Package to Render Org to Hexo's Markdown
+
+Just for users who are perflexed by that Hexo can't render Org directly.
+
+** Installation
+
+You can install =jk-org2md-hexo= using melpa, like this:
+
+#+BEGIN_SRC elisp
+  M-x package-install jk-org2md-hexo
+#+END_SRC
+
+and if you use =use-package= manage your configurations, this way is okay:
+
+#+BEGIN_SRC elisp
+  (use-package jk-org2md-hexo
+    :ensure t)
+#+END_SRC
+
+** Usage
+
+This package is used to render a =.org= file to a =.md= file which can be rendered by HEXO.
+
+It offers two useful functions, and you must execute them in order, like this:
+
+*** jk/insert-date
+
+It will be insert a time string like this:
+
+#+BEGIN_EXAMPLE
+  #+DATE: 2019/02/19 12:29:08
+#+END_EXAMPLE
+
+It must be executed before =jk/md-export=. 
+
+*** jk/md-export
+
+It must be executed after =jk/insert-date=. 
+
+It will be insert a front-matter in a generated =.md= file, like this:
+
+#+BEGIN_EXAMPLE
+  ---
+  title: get things done  
+  date: 2018/06/09 12:46:29
+  updated: 2019/02/10 12:46:52
+  ---
+  ...
+  ...
+#+END_EXAMPLE
+
+*** Summary
+
+1. Make sure that in a =.org= buffer, such as =xx/_orgs/hello-world.org=, then
+2. execute =jk/insert-date= , like =M-x jk/insert-date=, then
+3. execute =jk/md-export=
+
+Now, here will be a =.md= file, such as =xx/_posts/hello-world.md=.
+
+If you update the =.org= file again, just run =jk/md-export= to update the relative =.md= file.
+
+#+BEGIN_QUOTE
+  NOTE: =jk/insert-date= must be executed before =jk/md-exports=.
+#+END_QUOTE
