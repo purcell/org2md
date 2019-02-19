@@ -1,4 +1,4 @@
-;;; jk-org2md-hexo.el --- A plugin enhanced ox-gfm
+;;; jk-org2md-hexo.el --- A plugin enhanced ox-gfm -*- lexical-binding: t -*-
 
 ;; Author: Jack Liu
 ;; Keywords: org, markdown, github
