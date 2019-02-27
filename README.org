@@ -6,7 +6,24 @@ Just for users who are perflexed by that Hexo can't render Org directly.
 
 ** Installation
 
-You can install =jk-org2md-hexo= using melpa, like this:
+*** Manual Installation
+
+At this time, it still be not uploaded Melpa, and you can install it manually.
+
+#+BEGIN_SRC sh
+git clone https://github.com/loveminimal/jk-org2md-hexo.git
+#+END_SRC
+
+and, add the following contents to your init.el:
+
+#+BEGIN_SRC elisp
+  (add-to-list 'load-path "<path where jk-org2md-hexo is installed>")
+  (require 'jk-org2md-hexo)
+#+END_SRC
+
+*** Melpa
+
+You can install =jk-org2md-hexo= using melpa later, like this:
 
 #+BEGIN_SRC elisp
   M-x package-install jk-org2md-hexo
