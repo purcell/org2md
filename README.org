@@ -4,6 +4,10 @@
 
 Just for users who are perflexed by that Hexo can't render Org directly.
 
+** Update
+
+Just reconstruct it to make it better.
+
 ** Installation
 
 *** Manual Installation
@@ -11,28 +15,28 @@ Just for users who are perflexed by that Hexo can't render Org directly.
 At this time, it still be not uploaded Melpa, and you can install it manually.
 
 #+BEGIN_SRC sh
-git clone https://github.com/loveminimal/jk-org2md-hexo.git
+git clone https://github.com/loveminimal/org2md.git
 #+END_SRC
 
 and, add the following contents to your init.el:
 
 #+BEGIN_SRC elisp
-  (add-to-list 'load-path "<path where jk-org2md-hexo is installed>")
-  (require 'jk-org2md-hexo)
+  (add-to-list 'load-path "<path where org2md is installed>")
+  (require 'org2md)
 #+END_SRC
 
 *** Melpa
 
-You can install =jk-org2md-hexo= using melpa later, like this:
+You can install =org2md= using melpa later, like this:
 
 #+BEGIN_SRC elisp
-  M-x package-install jk-org2md-hexo
+  M-x package-install org2md
 #+END_SRC
 
 and if you use =use-package= manage your configurations, this way is okay:
 
 #+BEGIN_SRC elisp
-  (use-package jk-org2md-hexo
+  (use-package org2md
     :ensure t)
 #+END_SRC
 
@@ -42,7 +46,7 @@ This package is used to render a =.org= file to a =.md= file which can be render
 
 It offers two useful functions, and you must execute them in order, like this:
 
-*** jk/insert-date
+*** org2md-insert-date
 
 It will be insert a time string like this:
 
@@ -50,11 +54,11 @@ It will be insert a time string like this:
   #+DATE: 2019/02/19 12:29:08
 #+END_EXAMPLE
 
-It must be executed before =jk/md-export=. 
+It must be executed before =org2md-export-md=. 
 
-*** jk/md-export
+*** org2md-export-md
 
-It must be executed after =jk/insert-date=. 
+It must be executed after =org2md-insert-date=. 
 
 It will be insert a front-matter in a generated =.md= file, like this:
 
@@ -71,13 +75,13 @@ It will be insert a front-matter in a generated =.md= file, like this:
 *** Summary
 
 1. Make sure that in a =.org= buffer, such as =xx/_orgs/hello-world.org=, then
-2. execute =jk/insert-date= , like =M-x jk/insert-date=, then
-3. execute =jk/md-export=
+2. execute =org2md-insert-date= , like =M-x org2md-insert-date=, then
+3. execute =org2md-export-md=
 
 Now, here will be a =.md= file, such as =xx/_posts/hello-world.md=.
 
-If you update the =.org= file again, just run =jk/md-export= to update the relative =.md= file.
+If you update the =.org= file again, just run =org2md-export-md= to update the relative =.md= file.
 
 #+BEGIN_QUOTE
-  NOTE: =jk/insert-date= must be executed before =jk/md-exports=.
+  NOTE: =org2md-insert-date= must be executed before =org2md-export-md=.
 #+END_QUOTE
