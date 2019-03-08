@@ -1,28 +1,34 @@
-;;; org2md.el --- A plugin enhanced ox-gfm -*- lexical-binding: t -*-
+;;; org2md.el --- Export ".org" to Hexo's ".md". -*- lexical-binding: t -*-
 
-;; Author: Jack LIU
+;; Author: Jack LIU <loveminimal@outlook.com>
+;; Version: 0.1
+;; Package-Requires: ((ox-gfm "1.0"))
 ;; Keywords: org, markdown, hexo
+;; URL: https://github.com/loveminimal/org2md
+
 
 ;;; Commentary:
 
-;; This library can render a org file to a markdown file which can be rendered by HEXO.
-;; based on the `ox-gfm' plugin.
+;; Hexo is a static blog generator, which just render specific format ".md" file.  So
+;; you need `ox-gfm' to conform it.  And
+;; this package can achieve this goal, which will auto add a Front-matter of exported markdown file.  Also,
+;; it sloves the problem of images showwing.
 
 ;; It offers two functions:
-;; jk/insert-date
-;; jk/md-export
+;; 1. org2md-insert-date
+;; 2. org2md-export-md
+
+;; Note that, you must execute `org2md-insert-date' one time BEFORE executing `org2md-export-md'.
+;; It is owing to that `org2md-export-md' is depending on a time-string offered by `org2md-insert-date'.
+
 
 ;;; Code:
 
-(unless (package-installed-p 'ox-gfm)
-  (package-refresh-contents)
-  (package-install 'ox-gfm))
-
-
 (defun org2md-insert-date ()
-  "Insert current date."
+  "Insert current date.
+It will add a time-string at beginning of buffer, e.g. '#+DATE: 2019/03/08 09:51:11'."
   (interactive)
-  (beginning-of-buffer)
+  (goto-char (point-min))
   (insert "#+DATE: ")
   ;; (org-time-stamp t)
   (insert (format-time-string "%Y/%m/%d %T"))
@@ -30,7 +36,8 @@
 
 
 (defun org2md-export-md ()
-  "Export .org to .md which will be added Front-matter."
+  "Export '.org' to '.md' which will be added Front-matter.
+Thus hexo can render it."
   (interactive)
   (save-buffer)
   (let ((filename (car (split-string (buffer-name) "\\.")))
@@ -48,7 +55,7 @@
 				  (car (cdr (cdr (cdr (cdr (cdr (cdr filename-list))))))) " "
 				  (car (cdr (cdr (cdr (cdr (cdr (cdr (cdr filename-list)))))))) "\n")))
 	    (write-region file-title nil filename-dot-md)
-	    (beginning-of-buffer)
+	    (goto-char (point-min))
 	    (forward-char 8)
 	    (let (p1 p2)
 	      (setq p1 (point))
@@ -60,7 +67,8 @@
 	      (append-to-file (format-time-string "%Y/%m/%d %T") nil filename-dot-md)
 	      (append-to-file "\n---\n\n" nil filename-dot-md)
 	      (org-gfm-export-as-markdown)
-	      (replace-string ".." "")
+	      (while (search-forward ".." nil t)
+		(replace-match "" nil t))
 	      (append-to-file nil t filename-dot-md)
 	      (kill-this-buffer)
 	      (switch-window-then-maximize))))))
