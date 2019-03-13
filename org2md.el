@@ -70,7 +70,7 @@ Thus hexo can render it."
 	      (while (search-forward ".." nil t)
 		(replace-match "" nil t))
 	      (append-to-file nil t filename-dot-md)
-	      (kill-this-buffer)
+	      (kill-buffer)
 	      (switch-window-then-maximize))))))
 
 
